@@ -1,0 +1,18 @@
+{
+  "name": "gvand-stack",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Paulo Vitor",
+  "license": "MIT",
+  "scripts": {
+    "debug": "DEBUG=@neo4j/graphql:* node index.js",
+    "dev": "node index.js"
+  },
+  "dependencies": {
+    "@neo4j/graphql": "^3.12.1",
+    "apollo-server": "^3.11.1",
+    "graphql": "^16.6.0",
+    "neo4j-driver": "^5.2.0"
+  },
+  "type": "module"
+}
