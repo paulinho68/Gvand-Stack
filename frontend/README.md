@@ -13,6 +13,10 @@ npm install
 pnpm install
 ```
 
+## Environment Variables
+
+VITE_BACKEND_URI is your backend uri
+
 ### Compiles and hot-reloads for development
 
 ```

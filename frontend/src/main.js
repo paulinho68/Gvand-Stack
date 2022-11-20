@@ -1,29 +1,13 @@
-import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client/core'
-import App from './App.vue'
+import App from '@/App.vue'
+// import Login from '@/views/Login.vue';
 import { createApp, h, provide } from 'vue'
 import { DefaultApolloClient } from '@vue/apollo-composable'
+import router from '@/router'
 
 // Plugins
 import { registerPlugins } from '@/plugins'
-import vuetify from './plugins/vuetify'
-import { createApolloProvider } from '@vue/apollo-option'
-
-const httpLink = createHttpLink({
-  uri: 'http://localhost:4000/',
-})
-
-// Cache implementation
-const cache = new InMemoryCache()
-
-// Create the apollo client
-const apolloClient = new ApolloClient({
-  link: httpLink,
-  cache,
-})
-
-const apolloProvider = createApolloProvider({
-  defaultClient: apolloClient,
-})
+import vuetify from '@/plugins/vuetify'
+import {apolloProvider, apolloClient} from '@/plugins/apollo'
 
 const app = createApp({
   setup () {
@@ -32,10 +16,11 @@ const app = createApp({
   render: () => h(App),
 })
 
+
+app.use(router)
 app.use(apolloProvider)
+app.use(vuetify)
 
 registerPlugins(app)
 
-app
-  .use(vuetify)
-  .mount('#app')
+app.mount('#app')
