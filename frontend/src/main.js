@@ -1,8 +1,10 @@
 import App from '@/App.vue'
-// import Login from '@/views/Login.vue';
+import 'vue-skeletor/dist/vue-skeletor.css';
 import { createApp, h, provide } from 'vue'
 import { DefaultApolloClient } from '@vue/apollo-composable'
 import router from '@/router'
+import { Skeletor } from 'vue-skeletor';
+
 
 // Plugins
 import { registerPlugins } from '@/plugins'
@@ -20,6 +22,7 @@ const app = createApp({
 app.use(router)
 app.use(apolloProvider)
 app.use(vuetify)
+app.component(Skeletor.name, Skeletor);
 
 registerPlugins(app)
 

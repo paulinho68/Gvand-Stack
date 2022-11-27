@@ -13,9 +13,11 @@
     "@vue/apollo-option": "^4.0.0-alpha.20",
     "graphql": "^16.6.0",
     "graphql-tag": "^2.12.6",
+    "install": "^0.13.0",
     "roboto-fontface": "*",
     "vue": "^3.2.38",
     "vue-router": "^4.0.13",
+    "vue-skeletor": "^1.0.6",
     "vuetify": "^3.0.0",
     "webfontloader": "^1.0.0"
   },

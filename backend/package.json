@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "debug": "DEBUG=@neo4j/graphql:* node index.js",
-    "dev": "node index.js"
+    "dev": "nodemon index.js"
   },
   "dependencies": {
     "@neo4j/graphql": "^3.12.1",

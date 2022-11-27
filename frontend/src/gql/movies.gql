@@ -1,0 +1,10 @@
+query {
+  movies {
+    title
+    poster
+    imdbRating
+    movieId
+    year
+    runtime
+  }
+}

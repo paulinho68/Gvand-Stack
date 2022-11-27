@@ -2,9 +2,9 @@ import { Neo4jGraphQL } from "@neo4j/graphql";
 import { ApolloServer, gql } from "apollo-server";
 import { driver as _driver, auth } from "neo4j-driver";
 
-const AURA_ENDPOINT = "neo4j+s://405b7501.databases.neo4j.io";
+const AURA_ENDPOINT = "neo4j+s://1a0a6952.databases.neo4j.io";
 const USERNAME = "neo4j";
-const PASSWORD = "JDG5jaLD84OL9lSu-jsJrIHCI3eDdsY4OlmLAG617Q4";
+const PASSWORD = "eBqInJWNU7dZ4TKmIBrc9vVUPpHSfQVFzPu2CJLt9qI";
 
 // Create Neo4j driver instance
 const driver = _driver(
@@ -13,30 +13,70 @@ const driver = _driver(
 );
 
 const typeDefs = gql`
+
+    type User {
+      permisson: String!
+      userId: Int
+    }
+      
+    interface Person {
+      name: String!
+      born: Date!
+      bornIn: String!
+      died: String
+      imdbId: Int
+      tmdbId: Int
+      url: String!
+    }
+
+    type Director implements Person{
+        name: String!
+        bio: String!
+        born: Date!
+        bornIn: String!
+        died: String
+        imdbId: Int
+        poster: String!
+        tmdbId: Int
+        url: String!
+        movies: [Movie!]! @relationship(type: "DIRECTED", direction: OUT)
+    }
+
+    type Actor implements Person{
+        name: String!
+        bio: String!
+        born: Date!
+        bornIn: String!
+        died: String
+        imdbId: Int
+        poster: String!
+        tmdbId: Int
+        url: String!
+        movies: [Movie!]! @relationship(type: "ACTED_IN", direction: OUT)
+    }
+
     type Movie {
-        title: String
-        # people: [Person!]! @relationship(type: "ACTED_IN", direction: IN)
+        movieId: Int
+        countries: [String]
+        imdbId: Int
+        imdbRating: Float
+        imdbVotes: Int
+        plot: String!
+        poster: String
+        released: Date!
+        revenue: Int!
+        runtime: Int
+        title: String!
+        tmdbId: Int
+        url: String
+        year: Int
+        genres: [Genre!]! @relationship(type: "IN_GENRE", direction: OUT)
         actors: [Actor!]! @relationship(type: "ACTED_IN", direction: IN)
         directors: [Director!]! @relationship(type: "DIRECTED", direction: IN)
     }
 
-    # type Person{
-    #   name: String
-    #   movies: [Movie!]! @relationship(type: "ACTED_IN", direction: OUT)
-    # }
-
-    interface Person {
-        name: String
-    }
-
-    type Actor implements Person{
-        name: String
-        movies: [Movie!]! @relationship(type: "ACTED_IN", direction: OUT)
-    }
-
-    type Director implements Person{
-        name: String
-        movies: [Movie!]! @relationship(type: "DIRECTED", direction: OUT)
+    type Genre {
+      name: String!
     }
 `;
 
