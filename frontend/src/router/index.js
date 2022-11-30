@@ -18,6 +18,11 @@ const routes = [
     component: () => lazyLoad("Dashboard"),
   },
   {
+    path: '/movies/:id',
+    name: "Movie",
+    component: () => lazyLoad("Movie")
+  },
+  {
     path: "/:catchAll(.*)",
     component: NotFound,
   },

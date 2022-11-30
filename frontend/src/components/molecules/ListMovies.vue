@@ -16,6 +16,7 @@
         :key="movie.movieId"
       >
         <CardMovie
+          :movieId="movie.movieId"
           :title="movie.title"
           :img_url="movie.poster"
           :rating="movie.imdbRating"

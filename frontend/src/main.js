@@ -18,7 +18,6 @@ const app = createApp({
   render: () => h(App),
 })
 
-
 app.use(router)
 app.use(apolloProvider)
 app.use(vuetify)

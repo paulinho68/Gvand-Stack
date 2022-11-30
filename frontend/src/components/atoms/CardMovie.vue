@@ -1,6 +1,8 @@
 <template>
   <div class="card-movie">
-    <img :src="img_url" :alt="title" />
+    <router-link :to="{ name: 'Movie', params: { id: movieId } }">
+      <img :src="img_url" :alt="title" />
+    </router-link>
     <div class="card-movie-title">
       <p>{{ title.length > 20 ? `${title.substring(0, 20)}...` : title }}</p>
     </div>
@@ -14,7 +16,7 @@
     </div>
     <v-card-actions>
       <span class="grey--text text--lighten-2 text-caption mr-2">
-        ({{ (rating / 2).toFixed(1) }})
+        ({{ current_rating }})
       </span>
       <v-rating
         background-color="white"
@@ -22,6 +24,8 @@
         hover
         length="5"
         size="5"
+        half-increments
+        v-model="current_rating"
       ></v-rating>
     </v-card-actions>
   </div>
@@ -31,6 +35,7 @@
 export default {
   name: "CardMovie",
   props: {
+    movieId: String,
     title: String,
     img_url: String,
     rating: Number,
@@ -38,7 +43,12 @@ export default {
     runtime: Number,
   },
   data() {
-    return {};
+    return {
+      current_rating: 0,
+    };
+  },
+  created() {
+    this.current_rating = (this.rating / 2).toFixed(1);
   },
 };
 </script>
@@ -60,6 +70,10 @@ export default {
     width: 100%;
     height: 220px;
     margin: 0;
+    cursor: pointer;
+    &:hover {
+      opacity: 0.8;
+    }
   }
 
   .card-movie-title {
@@ -68,6 +82,10 @@ export default {
       font-size: 16px;
       font-weight: 700;
       color: #3aabdf;
+      cursor: pointer;
+      &:hover {
+        opacity: 0.8;
+      }
     }
   }
 

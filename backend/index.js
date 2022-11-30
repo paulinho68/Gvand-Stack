@@ -56,14 +56,15 @@ const typeDefs = gql`
     }
 
     type Movie {
-        movieId: Int
+        movieId: String!
         countries: [String]
+        languages: [String]
         imdbId: Int
         imdbRating: Float
         imdbVotes: Int
         plot: String!
         poster: String
-        released: Date!
+        released: DateTime!
         revenue: Int!
         runtime: Int
         title: String!
