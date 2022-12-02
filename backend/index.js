@@ -15,7 +15,8 @@ const driver = _driver(
 const typeDefs = gql`
 
     type User {
-      permisson: String!
+      name: String
+      permisson: String
       userId: Int
     }
       

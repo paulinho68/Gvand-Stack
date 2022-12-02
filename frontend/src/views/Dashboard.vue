@@ -8,7 +8,7 @@
 
 <script>
 import { provideApolloClient, useQuery } from "@vue/apollo-composable";
-import { computed, watchEffect } from "vue";
+import { computed } from "vue";
 import { ALL_MOVIES } from "../gql/movies.js";
 import { apolloClient } from "../plugins/apollo";
 import ListMovies from "@/components/molecules/ListMovies.vue";
@@ -27,9 +27,7 @@ const { result, loading } = useQuery(
   }
 );
 const movies = computed(() => result.value?.movies ?? []);
-watchEffect(() => {
-  console.log(movies);
-});
+
 export default {
   data() {
     return {

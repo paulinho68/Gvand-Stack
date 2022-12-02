@@ -8,7 +8,7 @@
     >
       <v-card class="elevation-12">
         <v-toolbar dark color="#3aabdf">
-          <v-toolbar-title>Enter your name</v-toolbar-title>
+          <v-toolbar-title color="white">Enter your name</v-toolbar-title>
         </v-toolbar>
         <v-card-text>
           <v-form>
@@ -18,12 +18,20 @@
               label="Login"
               type="text"
             ></v-text-field>
-            <div class="error-text" v-if="!!errors.name">{{ errors.name }}</div>
+            <div class="error-text" v-if="!!errorsName">{{ errorsName }}</div>
           </v-form>
         </v-card-text>
+        <span>{{ user?.value }}</span>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" type="submit">Login</v-btn>
+          <v-btn color="primary" type="submit">
+            <v-progress-circular
+              v-if="loading"
+              indeterminate
+              color="primary"
+            ></v-progress-circular>
+            <p v-if="!loading">Login</p>
+          </v-btn>
         </v-card-actions>
       </v-card>
     </form>
@@ -31,25 +39,69 @@
 </template>
 
 <script>
+import router from "@/router";
+import { USER_BY_NAME, CREATE_USER } from "../gql/users";
 export default {
-  name: "Login",
   data() {
     return {
       name: "",
-      errors: {
-        name: "",
-      },
+      errorsName: "",
+      loading: false,
     };
   },
   methods: {
-    handleSubmit() {
-      if (this.name === "") {
-        this.errors.name = "É preciso informar o seu nome para continuar.";
-        return;
-      } else {
-        this.errors.name = "";
+    async handleSubmit() {
+      const setUser = async (newUser) => {
+        sessionStorage.setItem("user", JSON.stringify(newUser));
+        router.push({ name: "Dashboard" });
+      };
+
+      try {
+        if (this.name === "") {
+          this.errorsName = "É preciso informar o seu nome para continuar.";
+          return;
+        } else {
+          this.errorsName = "";
+        }
+
+        this.loading = true;
+
+        const { data } = await this.$apollo.query({
+          query: USER_BY_NAME,
+          variables: {
+            name: this.name,
+          },
+        });
+
+        const user = data?.users[0] || {};
+
+        if (!!user?.name) {
+          await setUser(user);
+        } else {
+          const uuid = Number(
+            String((new Date().valueOf() / 9999) * 5).split(".")[1]
+          );
+          const newUser = {
+            userId: uuid,
+            name: this.name,
+            permisson: null,
+          };
+
+          const { data } = await this.$apollo.mutate({
+            mutation: CREATE_USER,
+            variables: {
+              input: newUser,
+            },
+          });
+          if (data?.createUsers?.users?.length > 0) {
+            await setUser(newUser);
+          }
+        }
+      } catch (err) {
+        console.log(err);
+      } finally {
+        this.loading = false;
       }
-      console.log(this.name);
     },
   },
 };
