@@ -3,8 +3,8 @@ import NotFound from "@/views/NotFound.vue";
 import Login from "@/views/Login.vue";
 
 const lazyLoad = (view) => {
-  return import(`@/views/${view}.vue`)
-}
+  return import(`@/views/${view}.vue`);
+};
 
 const routes = [
   {
@@ -18,9 +18,9 @@ const routes = [
     component: () => lazyLoad("Dashboard"),
   },
   {
-    path: '/movies/:id',
+    path: "/movies/:id",
     name: "Movie",
-    component: () => lazyLoad("Movie")
+    component: () => lazyLoad("Movie"),
   },
   {
     path: "/:catchAll(.*)",
@@ -31,6 +31,19 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  const isAuthenticated = Boolean(
+    JSON.parse(sessionStorage.getItem("user"))?.name
+  );
+  if (to.name !== "Login" && !isAuthenticated) {
+    next({ name: "Login" });
+  } else if (to.name === "Login" && isAuthenticated) {
+    next({ name: "Dashboard" });
+  } else {
+    next();
+  }
 });
 
 export default router;
