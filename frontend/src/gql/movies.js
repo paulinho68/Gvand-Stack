@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
 export const ALL_MOVIES = gql`
-  query ($options: MovieOptions) {
-    movies(options: $options) {
+  query ($options: MovieOptions, $where: MovieWhere) {
+    movies(options: $options, where: $where) {
       title
       poster
       imdbRating
@@ -23,6 +23,7 @@ export const MOVIE_BY_ID = gql`
       plot
       poster
       runtime
+      released
       directors {
         name
         bio

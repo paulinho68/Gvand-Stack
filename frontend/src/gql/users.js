@@ -4,7 +4,7 @@ export const USER_BY_NAME = gql`
   query Users($name: String) {
     users(where: { name: $name }) {
       userId
-      permisson
+      permission
       name
     }
   }
@@ -15,7 +15,7 @@ export const CREATE_USER = gql`
     createUsers(input: $input) {
       users {
         name
-        permisson
+        permission
         userId
       }
     }

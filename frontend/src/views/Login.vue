@@ -39,7 +39,6 @@
 </template>
 
 <script>
-import router from "@/router";
 import { USER_BY_NAME, CREATE_USER } from "../gql/users";
 export default {
   data() {
@@ -53,7 +52,7 @@ export default {
     async handleSubmit() {
       const setUser = async (newUser) => {
         sessionStorage.setItem("user", JSON.stringify(newUser));
-        router.push({ name: "Dashboard" });
+        this.$router.push({ name: "Dashboard" });
       };
 
       try {
@@ -84,7 +83,7 @@ export default {
           const newUser = {
             userId: uuid,
             name: this.name,
-            permisson: null,
+            permission: null,
           };
 
           const { data } = await this.$apollo.mutate({

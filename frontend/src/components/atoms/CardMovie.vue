@@ -4,7 +4,7 @@
       <img :src="img_url" :alt="title" />
     </router-link>
     <div class="card-movie-title">
-      <p>{{ title.length > 20 ? `${title.substring(0, 20)}...` : title }}</p>
+      <p>{{ title.length > 17 ? `${title.substring(0, 17)}...` : title }}</p>
     </div>
     <div class="card-movie-content">
       <div class="card-movie-classification">
@@ -19,12 +19,11 @@
         ({{ current_rating }})
       </span>
       <v-rating
+        readonly
         background-color="white"
         color="#3aabdf"
-        hover
         length="5"
         size="5"
-        half-increments
         v-model="current_rating"
       ></v-rating>
     </v-card-actions>
