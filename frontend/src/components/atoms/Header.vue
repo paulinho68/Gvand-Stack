@@ -11,13 +11,13 @@
 </template>
 
 <script>
-const user = JSON.parse(sessionStorage.getItem("user"));
 export default {
   name: "Header",
   data() {
     return {
-      userName: user?.name,
-      isAdmin: user?.permission === "admin",
+      userName: JSON.parse(sessionStorage.getItem("user"))?.name,
+      isAdmin:
+        JSON.parse(sessionStorage.getItem("user"))?.permission === "admin",
     };
   },
   methods: {
